@@ -31,7 +31,7 @@ class Window(QMainWindow):
         leop_btn = QPushButton('Next Leopard', self)
         tig_btn = QPushButton('Next Tiger', self)
 
-        pixmap = QPixmap('img/both.jpg')
+        pixmap = QPixmap('img/main_photo.jpg')
         self.lbl = QLabel(self)
         self.lbl.setPixmap(pixmap)
         self.lbl.setAlignment(Qt.AlignCenter)
@@ -117,7 +117,7 @@ class Window(QMainWindow):
 
     def createActions(self) -> None:
 
-        self.exitAction = QAction(QIcon('img/exit.png'), '&Exit')
+        self.exitAction = QAction(QIcon('img/log_out.png'), '&Exit')
         self.exitAction.triggered.connect(qApp.quit)
 
         self.changeAction = QAction(QIcon('img/change.png'), '&Change dataset')
@@ -128,11 +128,11 @@ class Window(QMainWindow):
         self.createAnnotAction.triggered.connect(self.createAnnotation)
 
         self.createData2Action = QAction(
-            QIcon('img/new_dataset.png'), '&Create dataset2')
+            QIcon('img/dataset.png'), '&Create dataset2')
         self.createData2Action.triggered.connect(self.createDataset2)
 
         self.createData3Action = QAction(
-            QIcon('img/new_dataset.png'), '&Create dataset3')
+            QIcon('img/dataset.png'), '&Create dataset3')
         self.createData3Action.triggered.connect(self.createDataset3)
 
     def createAnnotation(self) -> None:
