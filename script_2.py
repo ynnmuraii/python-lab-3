@@ -1,7 +1,8 @@
 import os
 import shutil
 import csv
-
+from typing import List
+from multiprocessing import Pool
 
 def get_full_paths2(class_name: str) -> list:
 
@@ -23,40 +24,41 @@ def get_rel_paths2(class_name: str) -> list:
     return image_rel_paths
 
 
-def replace_images(class_name: str) -> list:
-    
-    rel_path = os.path.relpath('dataset2')
-    class_path = os.path.join(rel_path, class_name)
+def replace_images(class_name: str) -> List[str]:
+
+    old_rel_path = os.path.relpath('dataset')
+    new_rel_path = os.path.relpath('dataset2')
+
+    class_path = os.path.join(old_rel_path, class_name)
     image_names = os.listdir(class_path)
     image_rel_paths = list(
         map(lambda name: os.path.join(class_path, name), image_names))
     new_rel_paths = list(
-        map(lambda name: os.path.join(rel_path, f'{class_name}_{name}'), image_names))
-    for old_name, new_name in zip(image_rel_paths, new_rel_paths):
-        os.replace(old_name, new_name)
+        map(lambda name: os.path.join(new_rel_path, f'{class_name}_{name}'), image_names))
+    zip_paths = zip(image_rel_paths, new_rel_paths)
+    
+    with Pool(10) as p:
+        p.starmap(shutil.copyfile, zip_paths)
 
-    os.chdir('dataset2')
-
-    if os.path.isdir(class_name):
-        os.rmdir(class_name)
-
-    os.chdir('..')
-
-
-def main() -> None:
+def create_dataset2() -> None:
 
     class1 = 'leopard'
     class2 = 'tiger'
 
     if os.path.isdir('dataset2'):
         shutil.rmtree('dataset2')
-
-    old = os.path.relpath('dataset')
-    new = os.path.relpath('dataset2')
-    shutil.copytree(old, new)
+    
+    os.mkdir('dataset2')
 
     replace_images(class1)
     replace_images(class2)
+
+
+
+def create_annotation2() -> None:
+
+    class1 = 'leopard'
+    class2 = 'tiger'
 
     leopard_full_paths = get_full_paths2(class1)
     leopard_rel_paths = get_rel_paths2(class1)
@@ -69,7 +71,3 @@ def main() -> None:
             writer.writerow([full_path, rel_path, class1])
         for full_path, rel_path in zip(tiger_full_paths, tiger_rel_paths):
             writer.writerow([full_path, rel_path, class2])
-
-
-if __name__ == "__main__":
-    main()

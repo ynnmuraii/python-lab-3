@@ -13,6 +13,7 @@ def get_full_paths(class_name: str) -> List[str]:
 
 
 def get_rel_paths(class_name: str) -> List[str]:
+    
     rel_path = os.path.relpath('dataset')
     class_path = os.path.join(rel_path, class_name)
     image_names = os.listdir(class_path)
@@ -21,7 +22,7 @@ def get_rel_paths(class_name: str) -> List[str]:
     return image_rel_paths
 
 
-def main() -> None:
+def create_annotation() -> None:
 
     class1 = 'leopard'
     class2 = 'tiger'
@@ -37,7 +38,3 @@ def main() -> None:
             writer.writerow([full_path, rel_path, class1])
         for full_path, rel_path in zip(tiger_full_paths, tiger_rel_paths):
             writer.writerow([full_path, rel_path, class2])
-
-
-if __name__ == "__main__":
-    main()

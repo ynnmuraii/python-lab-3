@@ -1,7 +1,7 @@
 import os
 
 
-def get_next(class_name: str) -> str:
+def get_next(class_name: str):
 
     path = os.path.join('dataset', class_name)
     class_names = os.listdir(path)
