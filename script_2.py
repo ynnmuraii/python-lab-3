@@ -5,7 +5,19 @@ from typing import List
 from multiprocessing import Pool
 
 def get_full_paths2(class_name: str) -> list:
+    """
+    Returns a list of modified absolute paths for images
 
+    This function returns a list of absolute paths for all images of a certain type
+    the class passed to the function after moving the images to another directory
+    _summary_
+
+    Args:
+        class_name (str): _description_
+
+    Returns:
+        list: _description_
+    """
     full_path = os.path.abspath('dataset2')
     image_names = os.listdir(full_path)
     image_class_names = [name for name in image_names if class_name in name]
@@ -15,7 +27,19 @@ def get_full_paths2(class_name: str) -> list:
 
 
 def get_rel_paths2(class_name: str) -> list:
+    """
+    Returns a list of changed relative paths for images
 
+    This function returns a list of relative paths for all images of a certain class
+    passed to the function after moving the images to another directory
+    _summary_
+
+    Args:
+        class_name (str): _description_
+
+    Returns:
+        list: _description_
+    """
     rel_path = os.path.relpath('dataset2')
     image_names = os.listdir(rel_path)
     image_class_names = [name for name in image_names if class_name in name]
@@ -25,7 +49,20 @@ def get_rel_paths2(class_name: str) -> list:
 
 
 def replace_images(class_name: str) -> List[str]:
+    """
+    Changes the names of the images and moves them to another directory
 
+    This function changes the name of the images by adding the image number to the front of the name, 
+    like class_number.jpg. It moves the images to a new directory called "dataset" 
+    and then deletes the old directory where the original class images were located.
+    _summary_
+
+    Args:
+        class_name (str): _description_
+
+    Returns:
+        List[str]: _description_
+    """
     old_rel_path = os.path.relpath('dataset')
     new_rel_path = os.path.relpath('dataset2')
 
