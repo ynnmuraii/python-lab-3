@@ -17,7 +17,7 @@ def get_full_paths(class_name: str) -> List[str]:
     Returns:
         List[str]: _description_
     """
-    
+
     full_path = os.path.abspath('dataset')
     class_path = os.path.join(full_path, class_name)
     image_names = os.listdir(class_path)

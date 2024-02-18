@@ -22,6 +22,7 @@ def get_next(class_name: str):
         if class_names[i] is not None:
             yield os.path.join(path, class_names[i])
         elif class_names[i] is None:
-            yield None   
+            yield None
+
 
 print(*get_next('leopard'))

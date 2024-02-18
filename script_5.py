@@ -12,15 +12,16 @@ class Iterator:
 
     def __iter__(self):
         return self
-    
+
     def __next__(self):
         if self.counter < self.limit:
-            next_path = os.path.join(self.dataset_name, self.class_name, self.data[self.counter])
+            next_path = os.path.join(
+                self.dataset_name, self.class_name, self.data[self.counter])
             self.counter += 1
             return next_path
         else:
             return None
-    
+
 
 if __name__ == "__main__":
 

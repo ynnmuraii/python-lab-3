@@ -4,6 +4,7 @@ import csv
 from typing import List
 from multiprocessing import Pool
 
+
 def get_full_paths2(class_name: str) -> list:
     """
     Returns a list of modified absolute paths for images
@@ -52,8 +53,8 @@ def replace_images(class_name: str) -> List[str]:
     """
     Changes the names of the images and moves them to another directory
 
-    This function changes the name of the images by adding the image number to the front of the name, 
-    like class_number.jpg. It moves the images to a new directory called "dataset" 
+    This function changes the name of the images by adding the image number to the front of the name,
+    like class_number.jpg. It moves the images to a new directory called "dataset"
     and then deletes the old directory where the original class images were located.
     _summary_
 
@@ -70,12 +71,13 @@ def replace_images(class_name: str) -> List[str]:
     image_names = os.listdir(class_path)
     image_rel_paths = list(
         map(lambda name: os.path.join(class_path, name), image_names))
-    new_rel_paths = list(
-        map(lambda name: os.path.join(new_rel_path, f'{class_name}_{name}'), image_names))
+    new_rel_paths = list(map(lambda name: os.path.join(
+        new_rel_path, f'{class_name}_{name}'), image_names))
     zip_paths = zip(image_rel_paths, new_rel_paths)
-    
+
     with Pool(10) as p:
         p.starmap(shutil.copyfile, zip_paths)
+
 
 def create_dataset2() -> None:
 
@@ -84,12 +86,11 @@ def create_dataset2() -> None:
 
     if os.path.isdir('dataset2'):
         shutil.rmtree('dataset2')
-    
+
     os.mkdir('dataset2')
 
     replace_images(class1)
     replace_images(class2)
-
 
 
 def create_annotation2() -> None:
@@ -101,7 +102,7 @@ def create_annotation2() -> None:
     leopard_rel_paths = get_rel_paths2(class1)
     tiger_full_paths = get_full_paths2(class2)
     tiger_rel_paths = get_rel_paths2(class2)
-    
+
     with open('paths2.csv', 'w') as csv_file:
         writer = csv.writer(csv_file, delimiter=',', lineterminator='\r')
         for full_path, rel_path in zip(leopard_full_paths, leopard_rel_paths):
